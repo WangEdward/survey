@@ -1,4 +1,4 @@
-# survey
+# Survey
 Survey API for AS School Project
 
 ## Pre-requirement
