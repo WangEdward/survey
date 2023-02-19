@@ -3,6 +3,7 @@ package com.example.survey.service;
 import com.example.survey.mapper.MCQMapper;
 import com.example.survey.model.MCQ;
 import com.example.survey.repository.MCQRepository;
+import com.example.survey.repository.MCQProjection;
 import com.example.survey.requests.MCQPostRequestBody;
 import com.example.survey.requests.MCQPutRequestBody;
 import com.example.survey.exception.BadRequestException;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @AllArgsConstructor
@@ -27,6 +30,14 @@ public class MCQService {
     public MCQ findByIdOrThrowBadRequestException(String id) {
         return repository.findMCQById(id).
                 orElseThrow(() -> new BadRequestException("Question not found"));
+    }
+
+    public Iterable<String> getAllMCQIds(){
+        Iterable<MCQProjection> projections = repository.findAllBy();
+        Iterable<String> ids = StreamSupport.stream(projections.spliterator(), false)
+                .map(MCQProjection::getId)
+                .collect(Collectors.toList());
+        return ids;
     }
 
     @Transactional(rollbackFor = Exception.class)

@@ -34,6 +34,11 @@ public class MCQController {
         return ResponseEntity.ok(service.findAllPagination(peageable));
     }
 
+    @GetMapping("/all_mcq_ids")
+    public ResponseEntity<Iterable<String>> getAllMCQIds(){
+        return ResponseEntity.ok(service.getAllMCQIds());
+    }
+
     @GetMapping("/byid/{id}")
     public ResponseEntity<MCQ> findMCQById(@PathVariable String id) {
         return ResponseEntity.ok(service.findByIdOrThrowBadRequestException(id));

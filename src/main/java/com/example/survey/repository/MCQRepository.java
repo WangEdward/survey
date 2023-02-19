@@ -16,5 +16,8 @@ public interface MCQRepository extends MongoRepository<MCQ, String> {
 
     void deleteById(String id);
 
+    Iterable<MCQProjection> findAllBy();
+
 
 }
+
